@@ -21,3 +21,5 @@
 ## Реализовал паттерном MVC
 
 Основной метод reverse лежит в модели TextReverse -> reverse()
+Тесты в классе tests->unit->models->TextReverseTest
+Запускать тесты командой  php vendor/bin/codecept run unit:TextReverseTest
