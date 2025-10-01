@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\TextReverse;
+use Faker\Provider\ar_EG\Text;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -57,11 +59,20 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $textReverseModel = new TextReverse();
+        if (Yii::$app->request->isAjax && $textReverseModel->load(Yii::$app->request->post()) && $textReverseModel->validate()) {
+            $reversedWord = $textReverseModel->reverse();
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'success' => true,
+                'data' => $reversedWord
+            ];
+
+        }
+        return $this->render('index', ['textReverseModel' => $textReverseModel]);
     }
 
     /**
